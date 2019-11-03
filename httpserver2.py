@@ -14,7 +14,7 @@ class HttpServer():
         self.port = port
         self.dir = dir
         self.address = (host, port)
-        self.rlist = []
+        self.rlist = [],
         self.wlist = []
         self.xlist = []
         self.create_socket()
@@ -89,7 +89,6 @@ class HttpServer():
         response += '\r\n'
         response += "<h1>Waiting for httpserver 3.0</h1>"
         confd.send(response.encode())
-
 
 
 # 用户使用HTTPServer
