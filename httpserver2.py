@@ -62,7 +62,45 @@ class HttpServer():
             self.get_data(confd.info)
 
     def get_html(self, confd, info):
-        pass
+        if info == "/":
+            filename = self.dir + "/index.html"
+        else:
+            filename = self.dir + info
+        try:
+            fd = open(filename)
+        except Exception:
+            response = '''HTTP/1.1 404 Not Found
+                        Content-Type:text/html
+            
+                        <h1>Sorry....</h1>
+                       '''
+        else:
+            response = '''HTTP/1.1 200 Not Found
+                        Content-Type:text/html
+
+                        '''
+            response += fd.read()
+        finally:
+            confd.send(response.encode())
 
     def get_data(self, confd, info):
-        pass
+        response = "HTTP/1.1 200 OK\r\n"
+        response += 'Content-Type:text/html\r\n'
+        response += '\r\n'
+        response += "<h1>Waiting for httpserver 3.0</h1>"
+        confd.send(response.encode())
+
+
+
+# 用户使用HTTPServer
+if __name__ == "__main__":
+    """
+    通过 HTTPServer类快速搭建服务，展示自己的网页
+    """
+    # 用户决定的参数
+    HOST = '0.0.0.0'
+    PORT = 8000
+    DIR = './static'  # 网页存储位置
+
+    httpd = HttpServer(HOST, PORT, DIR)  # 实例化对象
+    httpd.serve_forever()  # 启动服务
